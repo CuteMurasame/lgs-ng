@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "tsc",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts",
+    "build": "tsc && tsc-alias",
     "start": "node dist/index.js"
   },
   "author": "Federico2903",
@@ -18,13 +18,23 @@
     "@types/koa-static": "^4.0.4",
     "@types/node": "^24.10.1",
     "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@koa/cors": "^5.0.0",
+    "dotenv": "^17.2.3",
+    "ioredis": "^5.8.2",
     "koa": "^3.1.1",
     "koa-bodyparser": "^4.4.1",
     "koa-router": "^14.0.0",
-    "koa-static": "^5.0.0"
+    "koa-static": "^5.0.0",
+    "mysql2": "^3.15.3",
+    "pino": "^10.1.0",
+    "pino-pretty": "^13.1.2",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.27",
+    "typeorm-naming-strategies": "^4.1.0"
   }
 }

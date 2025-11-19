@@ -1,0 +1,39 @@
+import {
+    Entity, BaseEntity, PrimaryColumn,
+    Column, CreateDateColumn, UpdateDateColumn, Index
+} from 'typeorm';
+
+import { User } from './user';
+
+@Entity({ name: 'paste' })
+export class Paste extends BaseEntity {
+    @PrimaryColumn({ type: 'varchar', length: 8 })
+    id: string;
+
+    @Column()
+    title: string;
+
+    @Column({ type: 'mediumtext', nullable: true })
+    content: string | null;
+
+    @Column({ type: 'int', name: 'author_uid', unsigned: true })
+    authorUid: number | null;
+
+    @Column({ type: 'tinyint', default: 0 })
+    deleted: boolean;
+
+    @CreateDateColumn({ name: 'created_at' })
+    createdAt: number;
+
+    @UpdateDateColumn({ name: 'updated_at' })
+    updatedAt: number;
+
+    @Column({ name: 'deleted_reason', default: '作者要求删除' })
+    deletedReason: string;
+
+    author?: User | null;
+
+    async loadRelationships() {
+        this.author = this.authorUid ? await User.findOne({ where: { id: this.authorUid } }) : null;
+    }
+}

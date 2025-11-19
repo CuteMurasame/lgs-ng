@@ -171,7 +171,7 @@ import { renderIcon } from '@/utils/render';
 import ThemeEditor from '@/components/ThemeEditor.vue';
 
 import { uiThemeKey, type UiThemeVars } from '@/styles/themeKeys';
-import { defaultTheme } from "@/styles/defaultTheme.ts";
+import { defaultTheme } from "@/styles/default-theme.ts";
 
 const activeKey = ref('home');
 const collapsed = ref(true);

@@ -3,7 +3,7 @@ import { inject, ref } from 'vue';
 import { NButton, NColorPicker, NDrawer, NDrawerContent, NForm, NFormItem, NIcon, NInput, useMessage } from 'naive-ui';
 import { Settings as SettingsIcon } from '@vicons/ionicons5';
 import { uiThemeKey, type UiThemeVars } from '@/styles/themeKeys';
-import { defaultTheme } from '@/styles/defaultTheme';
+import { defaultTheme } from '@/styles/default-theme.ts';
 
 const uiTheme = inject(uiThemeKey);
 const message = useMessage();
