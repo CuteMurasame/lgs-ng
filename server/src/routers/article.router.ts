@@ -10,21 +10,28 @@ router.get('/query/:id', async (ctx: Context) => {
     const articleId = ctx.params.id;
     const article = await ArticleService.getArticleById(articleId);
     if (article) {
-        ctx.success(article);
-    } else {
+        if (article.deleted) {
+            ctx.fail(403, article.deletedReason);
+        }
+        else {
+            ctx.success(article);
+        }
+    }
+    else {
         ctx.fail(404, 'Article not found');
     }
 });
 
 router.get('/recent', async (ctx: Context) => {
-    const count = parseInt(ctx.query.count as string) || 20;
-    const updatedAfterStr = ctx.query.updatedAfter as string | undefined;
+    const count = Math.min(100, Number(ctx.query.count) || 20);
+    const updatedAfterStr = ctx.query.updated_after as string | undefined;
     const updatedAfter = updatedAfterStr ? new Date(updatedAfterStr) : undefined;
+    const truncatedCount = Math.min(Number(ctx.query.truncated_count) || 200, 600);
 
     const articles = await ArticleService.getRecentArticles(count, updatedAfter);
     const sanitizedArticles = articles.map((article) => ({
         ...article,
-        content: truncateUtf8(article.content, 300)
+        content: truncateUtf8(article.content, truncatedCount)
     }));
     ctx.success(sanitizedArticles);
 });

@@ -10,11 +10,11 @@ export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'varchar', nullable: true })
-    name: string | null;
+    @Column({ nullable: true })
+    name?: string;
 
     @Column({ type: 'varchar', nullable: true })
-    color: UserColor | null;
+    color?: UserColor;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: number;

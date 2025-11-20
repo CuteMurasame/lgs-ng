@@ -7,17 +7,17 @@ import { User } from './user';
 
 @Entity({ name: 'paste' })
 export class Paste extends BaseEntity {
-    @PrimaryColumn({ type: 'varchar', length: 8 })
+    @PrimaryColumn({ length: 8 })
     id: string;
 
     @Column()
     title: string;
 
     @Column({ type: 'mediumtext', nullable: true })
-    content: string | null;
+    content?: string;
 
-    @Column({ type: 'int', name: 'author_uid', unsigned: true })
-    authorUid: number | null;
+    @Column({ name: 'author_uid', unsigned: true })
+    authorUid?: number;
 
     @Column({ type: 'tinyint', default: 0 })
     deleted: boolean;
@@ -31,7 +31,7 @@ export class Paste extends BaseEntity {
     @Column({ name: 'deleted_reason', default: '作者要求删除' })
     deletedReason: string;
 
-    author?: User | null;
+    author?: User;
 
     async loadRelationships() {
         this.author = this.authorUid ? await User.findOne({ where: { id: this.authorUid } }) : null;

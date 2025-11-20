@@ -20,22 +20,22 @@ export class Article extends BaseEntity {
     title: string;
 
     @Column({ type: 'mediumtext', nullable: true })
-    content: string | null;
+    content?: string;
 
-    @Column({ type: 'int', name: 'author_uid', unsigned: true })
-    authorUid: number | null;
-
-    @Column({ type: 'int', nullable: true })
-    category: ArticleCategory | null;
+    @Column({ name: 'author_uid', unsigned: true })
+    authorUid?: number;
 
     @Column({ type: 'int', nullable: true })
-    upvote: number | null;
+    category?: ArticleCategory;
 
-    @Column({ type: 'int', name: 'favor_count', nullable: true })
-    favorCount: number | null;
+    @Column({ nullable: true })
+    upvote?: number;
 
-    @Column({ type: 'varchar', name: 'solution_for_pid', length: 50, nullable: true })
-    solutionForPid: string | null;
+    @Column({ name: 'favor_count', nullable: true })
+    favorCount?: number;
+
+    @Column({ name: 'solution_for_pid', length: 50, nullable: true })
+    solutionForPid?: string;
 
     @Column({ default: 0 })
     priority: number;
@@ -44,7 +44,9 @@ export class Article extends BaseEntity {
     deleted: boolean;
 
     @Column({ type: 'longtext', nullable: true })
-    tags: string | null;
+    tags?: string;
+    // TODO: change this column's type to varchar
+    // Oh my dear. Why did I use longtext here?
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: number;
@@ -56,9 +58,10 @@ export class Article extends BaseEntity {
     deletedReason: string;
 
     @Column({ type: 'text', name: 'content_hash', nullable: true })
-    contentHash: string | null;
+    contentHash?: string;
+    // TODO: change this column's type to varchar
 
-    author?: User | null;
+    author?: User;
 
     async loadRelationships() {
         this.author = this.authorUid ? await User.findOne({ where: { id: this.authorUid } }) : null;
