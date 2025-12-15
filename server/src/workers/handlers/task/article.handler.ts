@@ -1,7 +1,7 @@
 import type { SaveTask, TaskHandler } from '@/shared/task';
 import { fetch } from '@/utils/fetch';
 import { C3vkMode } from '@/shared/c3vk';
-import type { Article as LuoguArticle, LentilleDataResponse, UserSummary } from '@/types/luogu-api';
+import type { ArticleData, LentilleDataResponse, UserSummary } from '@/types/luogu-api';
 import { createHash } from 'crypto';
 import { ArticleService } from '@/services/article.service';
 import { ArticleHistoryService } from '@/services/article-history.service';
@@ -10,18 +10,10 @@ import { Article } from '@/entities/article';
 import { User } from '@/entities/user';
 import { ArticleCategory } from "@/shared/article";
 import { logger } from '@/lib/logger';
-import { UserColor } from "@/shared/user";
+import { buildUser } from '@/utils/luogu-api';
 
 function sha256(data: string): string {
     return createHash('sha256').update(data).digest('hex');
-}
-
-function buildUser(user: UserSummary): Partial<User> {
-    return {
-        id: user.uid,
-        name: user.name,
-        color: user.color as UserColor
-    };
 }
 
 export class ArticleHandler implements TaskHandler<SaveTask> {
@@ -29,7 +21,7 @@ export class ArticleHandler implements TaskHandler<SaveTask> {
 
     public async handle(task: SaveTask): Promise<void> {
         const url = `https://www.luogu.com/article/${task.payload.targetId}`;
-        const resp: LentilleDataResponse<{ article: LuoguArticle }> = await fetch(url, C3vkMode.MODERN);
+        const resp: LentilleDataResponse<ArticleData> = await fetch(url, C3vkMode.MODERN);
 
         const incomingUser = buildUser(resp.data.article.author);
         let user = await UserService.getUserByIdWithoutCache(incomingUser.id!);
@@ -47,7 +39,6 @@ export class ArticleHandler implements TaskHandler<SaveTask> {
             logger.info({ articleId: article.id }, 'Article content unchanged, skipping update');
             return;
         }
-        const now = new Date();
         const incomingData: Partial<Article> = {
             title: data.title,
             authorId: data.author.uid,
@@ -64,7 +55,6 @@ export class ArticleHandler implements TaskHandler<SaveTask> {
         } else {
             article = new Article();
             article.id = data.lid;
-            article.createdAt = now;
             article.deleted = false;
             article.viewCount = 0;
             article.tags = [];

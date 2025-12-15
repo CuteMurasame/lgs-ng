@@ -6,6 +6,7 @@ import { QUEUE_NAMES } from '@/shared/constants';
 import { logger } from '@/lib/logger';
 
 import { ArticleHandler } from '@/workers/handlers/task/article.handler';
+import { PasteHandler } from "@/workers/handlers/task/paste.handler";
 import { config } from "@/config";
 import { WorkerOptions } from "bullmq";
 
@@ -14,6 +15,7 @@ export function bootstrap() {
     const saveProcessor = new TaskProcessor<SaveTask>();
 
     saveProcessor.registerHandler(new ArticleHandler());
+    saveProcessor.registerHandler(new PasteHandler());
 
     const saveWorkerHost = new WorkerHost<SaveTask>(
         QUEUE_NAMES[TaskType.SAVE],

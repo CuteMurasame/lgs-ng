@@ -13,9 +13,6 @@ export class Paste extends BaseEntity {
     @PrimaryColumn({ length: 8 })
     id: string;
 
-    @Column()
-    title: string;
-
     @Column({ type: 'mediumtext' })
     content: string;
 

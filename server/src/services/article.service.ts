@@ -149,7 +149,7 @@ export class ArticleService {
     *
     * @param article Article to save
      */
-    @CacheEvict((article: Article) => `article:${article.id}`)
+    @CacheEvict((article: Article) => [`article:${article.id}`, `article:count`])
     static async saveArticle(article: Article) {
         await article.save();
     }

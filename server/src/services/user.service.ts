@@ -28,7 +28,6 @@ export class UserService {
     * @param user User object to save
     * @returns Saved user object
      */
-
     @CacheEvict((user: User) => `user:${user.id}`)
     static async saveUser(user: User): Promise<User> {
         return await user.save();
