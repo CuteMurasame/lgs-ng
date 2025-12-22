@@ -12,7 +12,10 @@ export class ArticleHistory extends BaseEntity {
     @Column({ type: 'int' })
     version: number;
 
-    @Column({ type: 'text' })
+    @Column({ type: 'varchar' })
+    title: string;
+
+    @Column({ type: 'mediumtext' })
     content: string;
 
     @CreateDateColumn({ name: 'created_at' })

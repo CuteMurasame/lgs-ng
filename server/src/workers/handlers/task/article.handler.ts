@@ -62,6 +62,6 @@ export class ArticleHandler implements TaskHandler<SaveTask> {
             Object.assign(article, incomingData);
         }
         await ArticleService.saveArticle(article);
-        await ArticleHistoryService.pushNewVersion(article.id, article.content);
+        await ArticleHistoryService.pushNewVersion(article.id, article.title, article.content);
     }
 }

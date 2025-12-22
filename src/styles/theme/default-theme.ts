@@ -7,5 +7,7 @@ export const defaultTheme: UiThemeVars = {
     primaryColorPressed: '#0c7a43',
     primaryColorSuppl: '#36ad6a',
     cardColor: '#ffffff',
-    cardShadow: '2px 2px 4px #e4e4e4'
+    cardTitleColor: '#333639',
+    cardShadow: '2px 2px 4px #e4e4e4',
+    iconColor: '#18a058'
 };

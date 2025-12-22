@@ -31,3 +31,18 @@ export interface PlazaArticle {
     tags?: string;
     reason?: string;
 }
+
+export interface TocItem {
+    title: string;
+    href: string;
+    children?: TocItem[];
+}
+
+export interface ArticleHistory {
+    id: number;
+    articleId: string;
+    version: number;
+    title: string;
+    content: string;
+    createdAt: string;
+}

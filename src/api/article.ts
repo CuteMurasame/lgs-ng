@@ -1,6 +1,6 @@
 import { apiFetch } from '@/utils/request.ts';
 import type { ApiResponse } from "@/types/common";
-import type { Article, PlazaArticle } from "@/types/article";
+import type { Article, PlazaArticle, ArticleHistory } from "@/types/article";
 
 export async function getArticleById(id: string) {
     return (await apiFetch(`/article/query/${id}`)) as ApiResponse<Article>;
@@ -24,4 +24,8 @@ export async function getArticleCount() {
 
 export async function getRelevant(id) {
     return (await apiFetch(`/article/relevant/${id}`)) as ApiResponse<PlazaArticle[]>;
+}
+
+export async function getArticleHistory(id: string) {
+    return (await apiFetch(`/article/history/${id}`)) as ApiResponse<ArticleHistory[]>;
 }

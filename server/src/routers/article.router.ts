@@ -7,6 +7,7 @@ import { ArticleService } from '@/services/article.service';
 import { truncateUtf8 } from "@/utils/string";
 import { TrackingEvent } from "@/shared/event";
 import { RecommendationService } from "@/services/recommendation.service";
+import { ArticleHistoryService } from "@/services/article-history.service";
 
 router.get('/query/:id', async (ctx: Context) => {
     try {
@@ -33,6 +34,15 @@ router.get('/relevant/:id', async (ctx: Context) => {
         ctx.success(await RecommendationService.getRelevantArticle(ctx.params.id));
     } catch (error) {
         ctx.fail(500, 'Failed to retrieve relevant articles');
+    }
+});
+
+router.get('/history/:id', async (ctx: Context) => {
+    try {
+        const history = await ArticleHistoryService.getHistoryByArticleId(ctx.params.id);
+        ctx.success(history);
+    } catch (error) {
+        ctx.fail(500, 'Failed to retrieve article history');
     }
 });
 
